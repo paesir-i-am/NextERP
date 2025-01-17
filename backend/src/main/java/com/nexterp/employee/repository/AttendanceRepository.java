@@ -1,6 +1,5 @@
 package com.nexterp.employee.repository;
 
-
 import com.nexterp.employee.entity.Attendance;
 import com.nexterp.employee.entity.AttendanceStatus;
 import com.nexterp.employee.entity.Employee;

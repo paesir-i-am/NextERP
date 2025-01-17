@@ -23,7 +23,7 @@
 <tr>
 <td>
 <div class="infoBox" id="tests">
-<div class="counter">1</div>
+<div class="counter">4</div>
 <p>tests</p>
 </div>
 </td>
@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.353s</div>
+<div class="counter">1.447s</div>
 <p>duration</p>
 </div>
 </td>
@@ -78,8 +78,23 @@
 </tr>
 </thead>
 <tr>
-<td class="success">testCreateJournalEntry()</td>
-<td class="success">0.353s</td>
+<td class="success">testExtractMemberId()</td>
+<td class="success">0.004s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testGenerateAndValidateToken()</td>
+<td class="success">0.005s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testInvalidToken()</td>
+<td class="success">0.003s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testTokenExpiration()</td>
+<td class="success">1.435s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -87,8 +102,8 @@
 <div id="tab1" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>17:48:26.134 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.nexterp.NextErpApplicationTests]: NextErpApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-17:48:26.171 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.nexterp.NextErpApplication for test class com.nexterp.NextErpApplicationTests
+<pre>19:22:00.365 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.nexterp.NextErpApplicationTests]: NextErpApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+19:22:00.407 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.nexterp.NextErpApplication for test class com.nexterp.NextErpApplicationTests
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -98,21 +113,21 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.1.0)
 
-2025-01-16T17:48:26.305+09:00  INFO 62533 --- [    Test worker] com.nexterp.NextErpApplicationTests      : Starting NextErpApplicationTests using Java 17.0.13 with PID 62533 (started by paesir in /Users/paesir/Desktop/git/NextERP/backend)
-2025-01-16T17:48:26.306+09:00  INFO 62533 --- [    Test worker] com.nexterp.NextErpApplicationTests      : No active profile set, falling back to 1 default profile: &quot;default&quot;
-2025-01-16T17:48:26.638+09:00  INFO 62533 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-01-16T17:48:26.665+09:00  INFO 62533 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 23 ms. Found 7 JPA repository interfaces.
-2025-01-16T17:48:26.863+09:00  INFO 62533 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-01-16T17:48:26.885+09:00  INFO 62533 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.2.Final
-2025-01-16T17:48:26.886+09:00  INFO 62533 --- [    Test worker] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
-2025-01-16T17:48:26.928+09:00  INFO 62533 --- [    Test worker] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
-2025-01-16T17:48:26.982+09:00  INFO 62533 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-01-16T17:48:26.988+09:00  INFO 62533 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2025-01-16T17:48:27.021+09:00  INFO 62533 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.mariadb.jdbc.Connection@7956f93a
-2025-01-16T17:48:27.022+09:00  INFO 62533 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-01-16T17:48:27.038+09:00  INFO 62533 --- [    Test worker] org.hibernate.orm.dialect                : HHH035001: Using dialect: org.hibernate.dialect.MariaDBDialect, version: 11.5
-2025-01-16T17:48:27.130+09:00  INFO 62533 --- [    Test worker] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
-2025-01-16T17:48:27.419+09:00  INFO 62533 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-01-17T19:22:00.557+09:00  INFO 79989 --- [    Test worker] com.nexterp.NextErpApplicationTests      : Starting NextErpApplicationTests using Java 17.0.13 with PID 79989 (started by paesir in /Users/paesir/Desktop/git/NextERP/backend)
+2025-01-17T19:22:00.557+09:00  INFO 79989 --- [    Test worker] com.nexterp.NextErpApplicationTests      : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2025-01-17T19:22:00.895+09:00  INFO 79989 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-01-17T19:22:00.939+09:00  INFO 79989 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 40 ms. Found 13 JPA repository interfaces.
+2025-01-17T19:22:01.181+09:00  INFO 79989 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-01-17T19:22:01.209+09:00  INFO 79989 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.2.Final
+2025-01-17T19:22:01.211+09:00  INFO 79989 --- [    Test worker] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2025-01-17T19:22:01.276+09:00  INFO 79989 --- [    Test worker] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2025-01-17T19:22:01.322+09:00  INFO 79989 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-01-17T19:22:01.329+09:00  INFO 79989 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-01-17T19:22:01.356+09:00  INFO 79989 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.mariadb.jdbc.Connection@6b9a1205
+2025-01-17T19:22:01.359+09:00  INFO 79989 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-01-17T19:22:01.374+09:00  INFO 79989 --- [    Test worker] org.hibernate.orm.dialect                : HHH035001: Using dialect: org.hibernate.dialect.MariaDBDialect, version: 11.5
+2025-01-17T19:22:01.474+09:00  INFO 79989 --- [    Test worker] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2025-01-17T19:22:01.818+09:00  INFO 79989 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
 Hibernate: 
     alter table if exists accounts 
        modify column created_at  datetime(6)
@@ -122,6 +137,36 @@ Hibernate:
 Hibernate: 
     alter table if exists accounts 
        modify column updated_at  datetime(6)
+Hibernate: 
+    alter table if exists announcement 
+       modify column content  TEXT not null
+Hibernate: 
+    alter table if exists announcement 
+       modify column created_at  datetime(6) not null
+Hibernate: 
+    alter table if exists announcement 
+       modify column updated_at  datetime(6)
+Hibernate: 
+    alter table if exists announcement 
+       modify column author_id  integer not null
+Hibernate: 
+    alter table if exists attendance 
+       modify column check_in_time  time(6)
+Hibernate: 
+    alter table if exists attendance 
+       modify column check_out_time  time(6)
+Hibernate: 
+    alter table if exists attendance 
+       modify column status  enum ('LATE','LEAVE','ON_TIME','REMOTE_WORK','SICK_LEAVE') not null
+Hibernate: 
+    alter table if exists attendance 
+       modify column employee_id  integer
+Hibernate: 
+    alter table if exists employee 
+       modify column employee_id  integer not null
+Hibernate: 
+    alter table if exists employee 
+       modify column address  TEXT
 Hibernate: 
     alter table if exists invoice_items 
        modify column created_at  datetime(6)
@@ -143,6 +188,9 @@ Hibernate:
 Hibernate: 
     alter table if exists journal_entries 
        modify column updated_at  datetime(6)
+Hibernate: 
+    alter table if exists member 
+       modify column employee_id  integer not null
 Hibernate: 
     alter table if exists reports 
        modify column created_at  datetime(6)
@@ -176,17 +224,68 @@ Hibernate:
 Hibernate: 
     alter table if exists vat 
        modify column updated_at  datetime(6)
-2025-01-16T17:48:28.198+09:00  INFO 62533 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-01-16T17:48:28.381+09:00  INFO 62533 --- [    Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2025-01-16T17:48:28.677+09:00  WARN 62533 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2025-01-16T17:48:29.178+09:00  WARN 62533 --- [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
-
-Using generated security password: 2b59cf21-8a4b-4a94-a551-0911b942d4eb
-
-This generated password is for development use only. Your security configuration must be updated before running your application in production.
-
-2025-01-16T17:48:29.233+09:00  INFO 62533 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4867e76b, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6ba3eee9, org.springframework.security.web.context.SecurityContextHolderFilter@6ab123d0, org.springframework.security.web.header.HeaderWriterFilter@724d4e75, org.springframework.security.web.csrf.CsrfFilter@4c431e2a, org.springframework.security.web.authentication.logout.LogoutFilter@667713c4, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@6abd88fe, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@3b5769b3, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@1d628a88, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@469caf69, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7614beba, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1b557402, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3c634a04, org.springframework.security.web.access.ExceptionTranslationFilter@128fe3ab, org.springframework.security.web.access.intercept.AuthorizationFilter@3014c46f]
-2025-01-16T17:48:29.260+09:00  INFO 62533 --- [    Test worker] com.nexterp.NextErpApplicationTests      : Started NextErpApplicationTests in 3.037 seconds (process running for 3.448)
+2025-01-17T19:22:02.863+09:00  INFO 79989 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-01-17T19:22:03.134+09:00  INFO 79989 --- [    Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-01-17T19:22:03.539+09:00  WARN 79989 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-01-17T19:22:03.591+09:00  INFO 79989 --- [    Test worker] c.n.common.config.CustomSecurityConfig   : ---------------------security config---------------------------
+2025-01-17T19:22:04.071+09:00  INFO 79989 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7781b55f, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2cb3bc0e, org.springframework.security.web.context.SecurityContextHolderFilter@10fef6da, org.springframework.security.web.header.HeaderWriterFilter@6f3f2340, org.springframework.web.filter.CorsFilter@511f21f9, org.springframework.security.web.authentication.logout.LogoutFilter@31906cb2, com.nexterp.common.security.filter.JWTCheckFilter@5f97d43e, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@5e83badc, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@63604641, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1313dea8, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@25c6a9de, org.springframework.security.web.session.SessionManagementFilter@1802badc, org.springframework.security.web.access.ExceptionTranslationFilter@26169be3, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@1dad97ed]
+2025-01-17T19:22:04.257+09:00  INFO 79989 --- [    Test worker] com.nexterp.NextErpApplicationTests      : Started NextErpApplicationTests in 3.783 seconds (process running for 4.245)
+Hibernate: 
+    select
+        d1_0.department_id,
+        d1_0.contact_email,
+        d1_0.name 
+    from
+        department d1_0
+Hibernate: 
+    select
+        d1_0.department_id,
+        d1_0.contact_email,
+        d1_0.name 
+    from
+        department d1_0
+Hibernate: 
+    select
+        d1_0.department_id,
+        d1_0.contact_email,
+        d1_0.name 
+    from
+        department d1_0
+Hibernate: 
+    select
+        p1_0.position_id,
+        p1_0.role,
+        p1_0.title 
+    from
+        positions p1_0
+Hibernate: 
+    select
+        p1_0.position_id,
+        p1_0.role,
+        p1_0.title 
+    from
+        positions p1_0
+Hibernate: 
+    select
+        p1_0.position_id,
+        p1_0.role,
+        p1_0.title 
+    from
+        positions p1_0
+Hibernate: 
+    select
+        p1_0.position_id,
+        p1_0.role,
+        p1_0.title 
+    from
+        positions p1_0
+Hibernate: 
+    select
+        p1_0.position_id,
+        p1_0.role,
+        p1_0.title 
+    from
+        positions p1_0
 Hibernate: 
     select
         a1_0.code,
@@ -205,49 +304,29 @@ Hibernate:
         count(a1_0.code) 
     from
         accounts a1_0
-Hibernate: 
-    select
-        a1_0.code,
-        a1_0.balance,
-        a1_0.created_at,
-        a1_0.description,
-        a1_0.name,
-        p1_0.code,
-        p1_0.balance,
-        p1_0.created_at,
-        p1_0.description,
-        p1_0.name,
-        p1_0.parent_code,
-        p1_0.type,
-        p1_0.updated_at,
-        a1_0.type,
-        a1_0.updated_at 
-    from
-        accounts a1_0 
-    left join
-        accounts p1_0 
-            on p1_0.code=a1_0.parent_code 
-    where
-        a1_0.code=?
-Hibernate: 
-    insert 
-    into
-        journal_entries
-        (account_code,amount,created_at,credit,date,debit,description,transaction_id,updated_at) 
-    values
-        (?,?,?,?,?,?,?,?,?)
-Hibernate: 
-    update
-        accounts 
-    set
-        balance=?,
-        description=?,
-        name=?,
-        parent_code=?,
-        type=?,
-        updated_at=? 
-    where
-        code=?
+2025-01-17T19:22:04.603+09:00  INFO 79989 --- [    Test worker] com.nexterp.NextErpApplicationTests      : 테스트 초기화 완료.
+2025-01-17T19:22:04.605+09:00  INFO 79989 --- [    Test worker] com.nexterp.NextErpApplicationTests      : 테스트 시작: testTokenExpiration
+2025-01-17T19:22:04.630+09:00  INFO 79989 --- [    Test worker] com.nexterp.NextErpApplicationTests      : 1초 유효 기간의 JWT 토큰 생성: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJtZW1iZXJJZCI6MTIzNDUsImlhdCI6MTczNzEwOTMyNCwiZXhwIjoxNzM3MTA5MzI0fQ.9eF8Ynsd9kJcS9TYdKr0YY1sWgIDlD00rkHCgRvO_-QpGrnP80cKuq-yOqXn6PTkaK2b1fssCLe4USVY42abgw
+2025-01-17T19:22:05.732+09:00  INFO 79989 --- [    Test worker] com.nexterp.NextErpApplicationTests      : 1.1초 대기 완료. 토큰 만료 예상.
+2025-01-17T19:22:05.752+09:00  INFO 79989 --- [    Test worker] com.nexterp.NextErpApplicationTests      : 만료된 토큰 검증 결과: Expired
+2025-01-17T19:22:05.753+09:00  INFO 79989 --- [    Test worker] com.nexterp.NextErpApplicationTests      : 테스트 종료: testTokenExpiration
+2025-01-17T19:22:05.758+09:00  INFO 79989 --- [    Test worker] com.nexterp.NextErpApplicationTests      : 테스트 초기화 완료.
+2025-01-17T19:22:05.759+09:00  INFO 79989 --- [    Test worker] com.nexterp.NextErpApplicationTests      : 테스트 시작: testExtractMemberId
+2025-01-17T19:22:05.759+09:00  INFO 79989 --- [    Test worker] com.nexterp.NextErpApplicationTests      : 클레임 데이터 준비 완료: {memberId=12345}
+2025-01-17T19:22:05.760+09:00  INFO 79989 --- [    Test worker] com.nexterp.NextErpApplicationTests      : JWT 토큰 생성 완료: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJtZW1iZXJJZCI6MTIzNDUsImlhdCI6MTczNzEwOTMyNSwiZXhwIjoxNzM3MTA5OTI1fQ.7U_4umvWepPTSKzBUovzJslYF-0zRGY4oU9lwrA6RJFCjsXU7dGHTRg1UttOUMtJx1ZRh4L7D9W5hS9b2nZa8A
+2025-01-17T19:22:05.761+09:00  INFO 79989 --- [    Test worker] com.nexterp.NextErpApplicationTests      : 토큰에서 추출된 memberId: 12345
+2025-01-17T19:22:05.761+09:00  INFO 79989 --- [    Test worker] com.nexterp.NextErpApplicationTests      : 테스트 종료: testExtractMemberId
+2025-01-17T19:22:05.763+09:00  INFO 79989 --- [    Test worker] com.nexterp.NextErpApplicationTests      : 테스트 초기화 완료.
+2025-01-17T19:22:05.763+09:00  INFO 79989 --- [    Test worker] com.nexterp.NextErpApplicationTests      : 테스트 시작: testInvalidToken
+2025-01-17T19:22:05.764+09:00  INFO 79989 --- [    Test worker] com.nexterp.NextErpApplicationTests      : 잘못된 토큰 준비 완료: invalid.jwt.token
+2025-01-17T19:22:05.765+09:00  INFO 79989 --- [    Test worker] com.nexterp.NextErpApplicationTests      : 잘못된 토큰 검증 결과: MalFormed
+2025-01-17T19:22:05.765+09:00  INFO 79989 --- [    Test worker] com.nexterp.NextErpApplicationTests      : 테스트 종료: testInvalidToken
+2025-01-17T19:22:05.767+09:00  INFO 79989 --- [    Test worker] com.nexterp.NextErpApplicationTests      : 테스트 초기화 완료.
+2025-01-17T19:22:05.767+09:00  INFO 79989 --- [    Test worker] com.nexterp.NextErpApplicationTests      : 테스트 시작: testGenerateAndValidateToken
+2025-01-17T19:22:05.767+09:00  INFO 79989 --- [    Test worker] com.nexterp.NextErpApplicationTests      : 클레임 데이터 준비 완료: {role=USER, memberId=12345}
+2025-01-17T19:22:05.768+09:00  INFO 79989 --- [    Test worker] com.nexterp.NextErpApplicationTests      : JWT 토큰 생성 완료: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiIsIm1lbWJlcklkIjoxMjM0NSwiaWF0IjoxNzM3MTA5MzI1LCJleHAiOjE3MzcxMDk5MjV9.CNPnAlnFdf_hiZ_JXpmWA3Ujge1xwq4Ec0CGXVAXOYLo362MqfXK3B00ZHclexwkTvM3Wsz2A6mezmWcI-UHcg
+2025-01-17T19:22:05.769+09:00  INFO 79989 --- [    Test worker] com.nexterp.NextErpApplicationTests      : JWT 토큰 검증 완료, 추출된 클레임: {role=USER, memberId=12345, iat=1737109325, exp=1737109925}
+2025-01-17T19:22:05.770+09:00  INFO 79989 --- [    Test worker] com.nexterp.NextErpApplicationTests      : 테스트 종료: testGenerateAndValidateToken
 </pre>
 </span>
 </div>
@@ -259,7 +338,7 @@ Hibernate:
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 8.11.1</a> at 2025. 1. 16. 오후 5:48:29</p>
+<a href="http://www.gradle.org">Gradle 8.11.1</a> at 2025. 1. 17. 오후 7:22:05</p>
 </div>
 </div>
 </body>

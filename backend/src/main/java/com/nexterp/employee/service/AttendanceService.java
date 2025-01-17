@@ -1,6 +1,8 @@
 package com.nexterp.employee.service;
 
+import com.nexterp.employee.dto.AttendanceDTO;
 import com.nexterp.employee.entity.Attendance;
+import com.nexterp.employee.entity.AttendanceStatus;
 import com.nexterp.employee.entity.Employee;
 import com.nexterp.employee.repository.AttendanceRepository;
 import com.nexterp.employee.repository.EmployeeRepository;
@@ -11,6 +13,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AttendanceService {
@@ -23,50 +26,71 @@ public class AttendanceService {
         this.employeeRepository = employeeRepository;
     }
 
-
-
-    // 전체 근태 기록 조회
-    public List<Attendance> getAllAttendances() {
-        return attendanceRepository.findAll();
+    // DTO 변환 메서드
+    private AttendanceDTO convertToDTO(Attendance attendance) {
+        return new AttendanceDTO(
+            attendance.getId(),
+            attendance.getEmployee().getId(),
+            attendance.getEmployee().getName(),
+            attendance.getDate(),
+            attendance.getCheckInTime(),
+            attendance.getCheckOutTime(),
+            attendance.getOvertimeHours(),
+            attendance.getStatus().toString()
+        );
     }
 
-    // 특정 직원의 근태 기록 조회
-    public List<Attendance> getAttendanceByEmployee(Employee employee) {
-        return attendanceRepository.findByEmployee(employee);
+    // 전체 근태 기록 조회 (DTO 변환)
+    public List<AttendanceDTO> getAllAttendances() {
+        return attendanceRepository.findAll()
+            .stream()
+            .map(this::convertToDTO)
+            .collect(Collectors.toList());
     }
 
-    // 특정 날짜의 근태 기록 조회
-    public List<Attendance> getAttendanceByDate(LocalDate date) {
-        return attendanceRepository.findByDate(date);
+    // 특정 직원의 근태 기록 조회 (DTO 변환)
+    public List<AttendanceDTO> getAttendanceByEmployee(Employee employee) {
+        return attendanceRepository.findByEmployee(employee)
+            .stream()
+            .map(this::convertToDTO)
+            .collect(Collectors.toList());
+    }
+
+    // 특정 날짜의 근태 기록 조회 (DTO 변환)
+    public List<AttendanceDTO> getAttendanceByDate(LocalDate date) {
+        return attendanceRepository.findByDate(date)
+            .stream()
+            .map(this::convertToDTO)
+            .collect(Collectors.toList());
     }
 
     // 근태 기록 저장
-    public Attendance saveAttendance(Attendance attendance) {
-        // Employee 엔터티를 데이터베이스에서 조회
-        Integer employeeId = attendance.getEmployee().getId();
-        Employee employee = employeeRepository.findById(employeeId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid employee ID: " + employeeId));
+    public AttendanceDTO saveAttendance(AttendanceDTO dto) {
+        // 1. Employee 조회
+        Employee employee = employeeRepository.findById(dto.getEmployeeId())
+            .orElseThrow(() -> new IllegalArgumentException("Invalid Employee ID: " + dto.getEmployeeId()));
 
-        // 영속화된 Employee를 Attendance에 설정
-        attendance.setEmployee(employee);
+        // 2. Attendance 엔티티 생성
+        Attendance attendance = Attendance.builder()
+            .employee(employee)
+            .date(dto.getDate())
+            .checkInTime(dto.getCheckInTime())
+            .checkOutTime(dto.getCheckOutTime())
+            .status(AttendanceStatus.valueOf(dto.getStatus()))
+            .build();
 
-        // 초과 근무 시간 계산 (18시 이후만 초과 근무로 간주)
-        if (attendance.getCheckInTime() != null && attendance.getCheckOutTime() != null) {
-            LocalTime checkOutTime = attendance.getCheckOutTime();
-            LocalTime overtimeStart = LocalTime.of(18, 0); // 초과 근무 기준 시간 (18시)
-
-            if (checkOutTime.isAfter(overtimeStart)) {
-                // 초과 근무 시간 계산
-                Duration overtimeDuration = Duration.between(overtimeStart, checkOutTime);
-                attendance.setOvertimeHours(BigDecimal.valueOf(overtimeDuration.toMinutes() / 60.0)); // 초과 근무 시간(시간 단위)
-            } else {
-                attendance.setOvertimeHours(BigDecimal.ZERO); // 초과 근무 없음
-
-            }
+        // 3. 초과 근무 시간 계산
+        if (attendance.getCheckOutTime() != null && attendance.getCheckOutTime().isAfter(LocalTime.of(18, 0))) {
+            Duration overtime = Duration.between(LocalTime.of(18, 0), attendance.getCheckOutTime());
+            attendance.setOvertimeHours(BigDecimal.valueOf(overtime.toMinutes() / 60.0));
+        } else {
+            attendance.setOvertimeHours(BigDecimal.ZERO);
         }
-        // Attendance 저장
-        return attendanceRepository.save(attendance);
+
+        // 4. Attendance 저장 후 DTO 변환
+        return convertToDTO(attendanceRepository.save(attendance));
     }
+
 
     // 근태 기록 삭제
     public void deleteAttendance(Integer id) {

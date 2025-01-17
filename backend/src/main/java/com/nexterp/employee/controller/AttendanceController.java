@@ -1,5 +1,6 @@
 package com.nexterp.employee.controller;
 
+import com.nexterp.employee.dto.AttendanceDTO;
 import com.nexterp.employee.entity.Attendance;
 import com.nexterp.employee.entity.Employee;
 import com.nexterp.employee.service.AttendanceService;
@@ -21,13 +22,13 @@ public class AttendanceController {
 
     // 모든 근태 기록 조회
     @GetMapping
-    public List<Attendance> getAllAttendances() {
+    public List<AttendanceDTO> getAllAttendances() {
         return attendanceService.getAllAttendances();
     }
 
     // 특정 직원의 근태 기록 조회
     @GetMapping("/employee/{employeeId}")
-    public List<Attendance> getAttendanceByEmployee(@PathVariable Integer employeeId) {
+    public List<AttendanceDTO> getAttendanceByEmployee(@PathVariable Integer employeeId) {
         Employee employee = new Employee();
         employee.setId(employeeId);
         return attendanceService.getAttendanceByEmployee(employee);
@@ -35,15 +36,15 @@ public class AttendanceController {
 
     // 특정 날짜의 근태 기록 조회
     @GetMapping("/date/{date}")
-    public List<Attendance> getAttendanceByDate(@PathVariable String date) {
+    public List<AttendanceDTO> getAttendanceByDate(@PathVariable String date) {
         LocalDate localDate = LocalDate.parse(date);
         return attendanceService.getAttendanceByDate(localDate);
     }
 
     // 근태 기록 생성
     @PostMapping
-    public ResponseEntity<Attendance> saveAttendance(@RequestBody Attendance attendance) {
-        Attendance savedAttendance = attendanceService.saveAttendance(attendance);
+    public ResponseEntity<AttendanceDTO> saveAttendance(@RequestBody AttendanceDTO attendanceDTO) {
+        AttendanceDTO savedAttendance = attendanceService.saveAttendance(attendanceDTO);
         return ResponseEntity.ok(savedAttendance);
     }
 

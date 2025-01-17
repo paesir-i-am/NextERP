@@ -1,7 +1,9 @@
 package com.nexterp.employee.controller;
 
+import com.nexterp.employee.dto.EmployeeDTO;
 import com.nexterp.employee.entity.Employee;
 import com.nexterp.employee.service.EmployeeService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,38 +19,40 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public Employee createEmployee(@RequestBody Employee employee) {
-        return employeeService.saveEmployee(employee);
+    public ResponseEntity<Employee> createEmployee(@RequestBody EmployeeDTO employeeDTO) {
+        Employee savedEmployee = employeeService.saveEmployee(employeeDTO);
+        return ResponseEntity.ok(savedEmployee);
     }
 
     @GetMapping
-    public List<Employee> getAllEmployees() {
-        return employeeService.getAllEmployees();
+    public ResponseEntity<List<EmployeeDTO>> getAllEmployees() {
+        List<EmployeeDTO> employees = employeeService.getAllEmployees();
+        return ResponseEntity.ok(employees);
     }
 
     @GetMapping("/{id}")
-    public Employee getEmployeeById(@PathVariable Integer id) {
-        return employeeService.getEmployeeById(id);
+    public ResponseEntity<EmployeeDTO> getEmployeeById(@PathVariable Integer id) {
+        EmployeeDTO employee = employeeService.getEmployeeById(id);
+        return ResponseEntity.ok(employee);
     }
 
-    // 부서별 조회
     @GetMapping("/department/{departmentId}")
-    public List<Employee> getEmployeesByDepartment(@PathVariable Integer departmentId) {
-        return employeeService.getEmployeesByDepartment(departmentId);
+    public ResponseEntity<List<EmployeeDTO>> getEmployeesByDepartment(@PathVariable Integer departmentId) {
+        List<EmployeeDTO> employees = employeeService.getEmployeesByDepartment(departmentId);
+        return ResponseEntity.ok(employees);
     }
 
-    // 직급별 조회
     @GetMapping("/position/{positionId}")
-    public List<Employee> getEmployeesByPosition(@PathVariable Integer positionId) {
-        return employeeService.getEmployeesByPosition(positionId);
+    public ResponseEntity<List<EmployeeDTO>> getEmployeesByPosition(@PathVariable Integer positionId) {
+        List<EmployeeDTO> employees = employeeService.getEmployeesByPosition(positionId);
+        return ResponseEntity.ok(employees);
     }
 
-    // 부서별 + 직급별 조회
     @GetMapping("/department/{departmentId}/position/{positionId}")
-    public List<Employee> getEmployeesByDepartmentAndPosition(
+    public ResponseEntity<List<EmployeeDTO>> getEmployeesByDepartmentAndPosition(
             @PathVariable Integer departmentId,
             @PathVariable Integer positionId) {
-        return employeeService.getEmployeesByDepartmentAndPosition(departmentId, positionId);
+        List<EmployeeDTO> employees = employeeService.getEmployeesByDepartmentAndPosition(departmentId, positionId);
+        return ResponseEntity.ok(employees);
     }
 }
-

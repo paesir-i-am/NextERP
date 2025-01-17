@@ -15,7 +15,7 @@ public class Member {
     @Column(name = "employee_id") // 기본 키로 선언
     private Integer id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @MapsId // employeeId를 매핑
     @JoinColumn(name = "employee_id", referencedColumnName = "employee_id")
     private Employee employee;

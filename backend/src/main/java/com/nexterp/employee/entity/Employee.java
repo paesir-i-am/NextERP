@@ -1,7 +1,9 @@
 package com.nexterp.employee.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
@@ -10,6 +12,8 @@ import java.time.LocalDate;
 @Setter
 @Entity
 @Table(name = "employee")
+@NoArgsConstructor // 기본 생성자
+@AllArgsConstructor // 모든 매개변수를 받는 생성자
 public class Employee {
 
     @Id

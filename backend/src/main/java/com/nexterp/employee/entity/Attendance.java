@@ -1,8 +1,7 @@
 package com.nexterp.employee.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,6 +11,9 @@ import java.time.LocalTime;
 @Setter
 @Entity
 @Table(name = "attendance")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Attendance {
 
     @Id

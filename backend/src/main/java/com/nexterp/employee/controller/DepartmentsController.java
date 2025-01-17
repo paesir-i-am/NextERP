@@ -1,6 +1,6 @@
 package com.nexterp.employee.controller;
 
-import com.nexterp.employee.entity.Department;
+import com.nexterp.employee.dto.DepartmentDTO;
 import com.nexterp.employee.service.DepartmentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,32 +19,32 @@ public class DepartmentsController {
 
     // 부서 전체 조회
     @GetMapping
-    public ResponseEntity<List<Department>> getAllDepartments() {
-        List<Department> departments = departmentService.getAllDepartments();
+    public ResponseEntity<List<DepartmentDTO>> getAllDepartments() {
+        List<DepartmentDTO> departments = departmentService.getAllDepartments();
         return ResponseEntity.ok(departments);
     }
 
     // 특정 부서 조회
     @GetMapping("/{id}")
-    public ResponseEntity<Department> getDepartmentById(@PathVariable Integer id) {
-        Department department = departmentService.getDepartmentById(id);
-        if (department != null) {
-            return ResponseEntity.ok(department);
+    public ResponseEntity<DepartmentDTO> getDepartmentById(@PathVariable Integer id) {
+        DepartmentDTO departmentDTO = departmentService.getDepartmentById(id);
+        if (departmentDTO != null) {
+            return ResponseEntity.ok(departmentDTO);
         }
         return ResponseEntity.notFound().build();
     }
 
     // 부서 생성
     @PostMapping
-    public ResponseEntity<Department> createDepartment(@RequestBody Department department) {
-        Department createdDepartment = departmentService.createDepartment(department);
+    public ResponseEntity<DepartmentDTO> createDepartment(@RequestBody DepartmentDTO departmentDTO) {
+        DepartmentDTO createdDepartment = departmentService.createDepartment(departmentDTO);
         return ResponseEntity.ok(createdDepartment);
     }
 
     // 부서 수정
     @PutMapping("/{id}")
-    public ResponseEntity<Department> updateDepartment(@PathVariable Integer id, @RequestBody Department department) {
-        Department updatedDepartment = departmentService.updateDepartment(id, department);
+    public ResponseEntity<DepartmentDTO> updateDepartment(@PathVariable Integer id, @RequestBody DepartmentDTO departmentDTO) {
+        DepartmentDTO updatedDepartment = departmentService.updateDepartment(id, departmentDTO);
         if (updatedDepartment != null) {
             return ResponseEntity.ok(updatedDepartment);
         }
