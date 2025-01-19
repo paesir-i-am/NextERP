@@ -24,6 +24,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 @Repository
 public interface AccountRepository extends JpaRepository<Account, String> {
@@ -39,4 +40,6 @@ public interface AccountRepository extends JpaRepository<Account, String> {
   // 특정 타입의 계정 총합을 구하는 메서드
   @Query("SELECT SUM(a.balance) FROM Account a WHERE a.type = :type")
   BigDecimal getTotalBalanceByType(@Param("type") AccountType type);
+
+  Optional<Account> findByCode(String code);
 }

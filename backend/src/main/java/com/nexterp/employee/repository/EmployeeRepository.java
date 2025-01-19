@@ -8,7 +8,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
-    // 필요한 경우 사용자 정의 메서드 추가
+
+        boolean existsById(int id);
 
         // 부서별 조회
         @Query("SELECT e FROM Employee e WHERE e.department.id = :departmentId")
