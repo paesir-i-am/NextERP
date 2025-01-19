@@ -73,4 +73,14 @@ public class Account {
     this.description = description;
     this.balance = balance;
   }
+
+  // 잔액 증가
+  public void addBalance(BigDecimal amount) {
+    this.balance = this.balance.add(amount);
+  }
+
+  // 잔액 감소
+  public void subtractBalance(BigDecimal amount) {
+    this.balance = this.balance.subtract(amount);
+  }
 }

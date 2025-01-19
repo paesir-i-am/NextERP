@@ -115,4 +115,8 @@ public class EmployeeService {
                 employee.getTerminationDate()
         );
     }
+
+    public boolean existById(Integer id) {
+        return employeeRepository.existsById(id);
+    }
 }

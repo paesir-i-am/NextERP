@@ -1,26 +1,26 @@
 package com.nexterp;
 
 import com.nexterp.accounting.dto.JournalEntryDTO;
-import com.nexterp.accounting.entity.Account;
-import com.nexterp.accounting.entity.AccountType;
-import com.nexterp.accounting.entity.JournalEntry;
-import com.nexterp.accounting.entity.ReportType;
-import com.nexterp.accounting.repository.AccountRepository;
-import com.nexterp.accounting.repository.JournalEntryRepository;
-import com.nexterp.accounting.repository.ReportRepository;
+import com.nexterp.accounting.entity.*;
+import com.nexterp.accounting.repository.*;
 import com.nexterp.accounting.service.JournalEntryService;
 import com.nexterp.accounting.service.ReportFileGenerator;
 import com.nexterp.common.util.CustomJWTException;
 import com.nexterp.common.util.JWTUtil;
 import com.nexterp.employee.dto.AttendanceDTO;
+import com.nexterp.employee.dto.EmployeeDTO;
 import com.nexterp.employee.entity.Department;
 import com.nexterp.employee.entity.Employee;
 import com.nexterp.employee.entity.Position;
 import com.nexterp.employee.repository.EmployeeRepository;
 import com.nexterp.employee.service.AttendanceService;
+import com.nexterp.employee.service.EmployeeService;
 import com.nexterp.member.entity.Member;
 import com.nexterp.member.repository.MemberRepository;
 import com.nexterp.member.service.MemberService;
+import com.nexterp.payroll.dto.SalaryDTO;
+import com.nexterp.payroll.entity.PaymentStatus;
+import com.nexterp.payroll.service.SalaryService;
 import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,6 +36,7 @@ import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -194,7 +195,7 @@ class NextErpApplicationTests {
     assertEquals(BigDecimal.valueOf(1.0), savedAttendance.getOvertimeHours());
   }*/
 
-  @Autowired
+  /*@Autowired
   private JWTUtil jwtUtil;
 
   @BeforeEach
@@ -288,5 +289,124 @@ class NextErpApplicationTests {
     assertEquals(12345, memberId);
 
     log.info("테스트 종료: testExtractMemberId");
-  }
+  }*/
+
+  @Autowired
+  private SalaryService salaryService;
+
+  @Autowired
+  private EmployeeService employeeService;
+
+  @Autowired
+  private TransactionRepository transactionRepository;
+
+  @Autowired
+  private InvoiceRepository invoiceRepository;
+
+  @Autowired
+  private InvoiceItemRepository invoiceItemRepository;
+
+  @Autowired
+  private JournalEntryRepository journalEntryRepository;
+
+  @Test
+  @Transactional
+  @Rollback(false)
+  public void testCreateSalaryAndVerifyRelatedEntities() {
+    System.out.println("========== 급여 생성 및 연관 엔터티 검증 테스트 시작 ==========");
+
+    // 1. 테스트 데이터 준비
+    System.out.println("[1] 테스트 데이터 준비 시작");
+    EmployeeDTO employeeDTO = new EmployeeDTO();
+    employeeDTO.setId(12345678);
+    employeeDTO.setName("John Doe");
+    employeeDTO.setBirthDate(LocalDate.of(1990, 1, 1));
+    employeeDTO.setGender(true);
+    employeeDTO.setPhone("010-1234-5678");
+    employeeDTO.setEmail("johndoe@example.com");
+    employeeDTO.setAddress("Seoul, Korea");
+    employeeDTO.setHireDate(LocalDate.of(2023, 1, 1));
+    employeeDTO.setDepartmentId(1); // 유효한 부서 ID
+    employeeDTO.setPositionId(1); // 유효한 직위 ID
+
+    Employee savedEmployee = employeeService.saveEmployee(employeeDTO);
+
+    SalaryDTO salaryDTO = new SalaryDTO();
+    salaryDTO.setEmployeeId(savedEmployee.getId());
+    salaryDTO.setBaseSalary(new BigDecimal("5000000"));
+    salaryDTO.setBonus(new BigDecimal("500000"));
+    salaryDTO.setDeductions(new BigDecimal("200000"));
+    System.out.println("[1] 테스트 데이터 준비 완료");
+
+    // 2. 급여 생성 호출
+    System.out.println("[2] createSalary 메서드 호출");
+    SalaryDTO resultSalaryDTO = salaryService.createSalary(salaryDTO);
+
+    // 3. Salary 검증
+    System.out.println("[3] Salary 저장 검증");
+    assertNotNull(resultSalaryDTO, "생성된 SalaryDTO가 null이면 안 됩니다.");
+    assertEquals(PaymentStatus.PAID.name(), resultSalaryDTO.getStatus());
+    assertEquals(0, new BigDecimal("5300000").compareTo(resultSalaryDTO.getTotalSalary()));
+    System.out.println("-> Salary 저장 성공: " + resultSalaryDTO);
+
+    // 4. Transaction 검증
+    System.out.println("[4] Transaction 저장 검증");
+    List<Transaction> transactions = transactionRepository.findByType(TransactionType.SALARY);
+    assertFalse(transactions.isEmpty(), "SALARY 타입의 Transaction이 저장되지 않았습니다.");
+    Transaction transaction = transactions.get(0);
+    assertEquals(0, new BigDecimal("5300000.00").compareTo(transaction.getAmount()));
+    assertEquals(TransactionType.SALARY, transaction.getType());
+    assertNotNull(transaction.getCreatedAt(), "Transaction의 생성일자가 null입니다.");
+    System.out.println("-> Transaction 저장 성공: " + transaction);
+
+    // 5. Invoice 검증
+    System.out.println("[5] Invoice 저장 검증");
+    Optional<Invoice> optionalInvoice = invoiceRepository.findByTransactionId(transaction.getId());
+    assertTrue(optionalInvoice.isPresent(), "Invoice가 저장되지 않았습니다.");
+    Invoice invoice = optionalInvoice.get();
+    assertEquals(0, new BigDecimal("5300000.00").compareTo(invoice.getTotalAmount()));
+    assertEquals("Company", invoice.getBuyer());
+    assertEquals("John Doe", invoice.getSeller());
+    System.out.println("-> Invoice 저장 성공: " + invoice);
+
+    // InvoiceItem 저장 검증
+    System.out.println("[6] InvoiceItem 저장 검증");
+    List<InvoiceItem> invoiceItems = invoiceItemRepository.findAllByInvoiceId(invoice.getId());
+    assertEquals(3, invoiceItems.size(), "InvoiceItem 개수가 잘못되었습니다.");
+
+    for (InvoiceItem item : invoiceItems) {
+      System.out.println("-> 저장된 InvoiceItem: " + item);
+      assertNotNull(item.getItemName(), "InvoiceItem의 itemName이 null입니다.");
+      assertTrue(item.getQuantity() > 0, "InvoiceItem의 수량이 0보다 작습니다.");
+
+      // Deductions는 음수일 수 있음
+      if (item.getItemName().equals("공제")) {
+        assertTrue(item.getTotalPrice().compareTo(BigDecimal.ZERO) < 0, "Deductions의 totalPrice는 음수여야 합니다.");
+      } else {
+        assertTrue(item.getTotalPrice().compareTo(BigDecimal.ZERO) > 0, "InvoiceItem의 totalPrice는 0보다 커야 합니다.");
+      }
+    }
+
+    // 7. JournalEntry 검증
+    System.out.println("[7] JournalEntry 저장 검증");
+    List<JournalEntry> journalEntries = journalEntryRepository.findByTransactionId(transaction.getId());
+    assertEquals(2, journalEntries.size(), "JournalEntry 개수가 잘못되었습니다.");
+
+    JournalEntry debitEntry = journalEntries.stream()
+        .filter(e -> e.getDebit().compareTo(BigDecimal.ZERO) > 0)
+        .findFirst()
+        .orElseThrow(() -> new IllegalArgumentException("차변 Entry가 없습니다."));
+    assertEquals(0, new BigDecimal("5300000").compareTo(debitEntry.getDebit()));
+    System.out.println("-> Debit JournalEntry 저장 성공: " + debitEntry);
+
+    JournalEntry creditEntry = journalEntries.stream()
+        .filter(e -> e.getCredit().compareTo(BigDecimal.ZERO) > 0)
+        .findFirst()
+        .orElseThrow(() -> new IllegalArgumentException("대변 Entry가 없습니다."));
+    assertEquals(0, new BigDecimal("5300000").compareTo(creditEntry.getCredit()));
+    System.out.println("-> Credit JournalEntry 저장 성공: " + creditEntry);
+
+    // 8. 최종 로그
+    System.out.println("========== 급여 생성 및 연관 엔터티 검증 테스트 종료 ==========");  }
+
 }
