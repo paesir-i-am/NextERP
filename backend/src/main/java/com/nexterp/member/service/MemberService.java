@@ -27,9 +27,13 @@ public class MemberService {
     // 회원 생성
     public MemberResponseDTO createMember(Employee employee) {
         // 이미 존재하는 Member가 있는지 확인
-        if (memberRepository.existsById(employee.getId())) {
-            throw new IllegalArgumentException("Member with the same Employee ID already exists: " + employee.getId());
+        Member existingMember = memberRepository.findByEmployeeId(employee.getId());
+
+        if (existingMember != null) {
+            // 이미 존재하는 경우, 새로운 Member 객체를 만들지 않고 기존 Member를 반환
+            return convertToResponseDTO(existingMember);
         }
+
 
         // 새로운 Member 객체 생성
         Member member = new Member();
@@ -47,7 +51,7 @@ public class MemberService {
     // 회원 조회
     public MemberResponseDTO getMemberById(Integer id) {
         Member member = memberRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Member not found with ID: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Member not found with ID: " + id));
 
         return convertToResponseDTO(member);
     }
@@ -55,7 +59,7 @@ public class MemberService {
     // 비밀번호 변경
     public void changePassword(Integer memberId, String newPassword) {
         Member member = memberRepository.findById(memberId)
-            .orElseThrow(() -> new IllegalArgumentException("Member not found with ID: " + memberId));
+                .orElseThrow(() -> new IllegalArgumentException("Member not found with ID: " + memberId));
 
         member.setPassword(newPassword);
         member.setIsInitialPassword(false);
@@ -65,7 +69,7 @@ public class MemberService {
     // 비밀번호 초기화
     public void resetPassword(Integer memberId, String senderEmail, String senderPassword) {
         Member member = memberRepository.findById(memberId)
-            .orElseThrow(() -> new IllegalArgumentException("Member not found with ID: " + memberId));
+                .orElseThrow(() -> new IllegalArgumentException("Member not found with ID: " + memberId));
 
         String newPassword = generateRandomPassword(8);
         member.setPassword(newPassword);
@@ -78,10 +82,10 @@ public class MemberService {
     // DTO 변환 메서드
     private MemberResponseDTO convertToResponseDTO(Member member) {
         return new MemberResponseDTO(
-            member.getId(),
-            member.getEmployee().getName(),
-            member.getEmployee().getEmail(),
-            member.getIsInitialPassword()
+                member.getId(),
+                member.getEmployee().getName(),
+                member.getEmployee().getEmail(),
+                member.getIsInitialPassword()
         );
     }
 
@@ -127,4 +131,3 @@ public class MemberService {
         return mailSender;
     }
 }
-
