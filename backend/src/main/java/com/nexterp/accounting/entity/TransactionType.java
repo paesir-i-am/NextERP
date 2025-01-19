@@ -15,5 +15,5 @@ package com.nexterp.accounting.entity;
 
 
 public enum TransactionType {
-  SALE, PURCHASE, REFUND, TRANSFER, EXPENSE, OTHER
+  SALE, PURCHASE, REFUND, TRANSFER, EXPENSE, SALARY, OTHER
 }

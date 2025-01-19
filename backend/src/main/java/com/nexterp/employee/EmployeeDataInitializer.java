@@ -69,9 +69,17 @@ public class EmployeeDataInitializer {
   @Bean
   public ApplicationRunner initializeAdminEmployee(EmployeeService employeeService) {
     return args -> {
+
+      int adminEmployeeId = 12341234;
+      if(employeeService.existById(adminEmployeeId)) {
+        System.out.println("Admin employee exists");
+        return;
+      }
+
+
       // 관리자 초기 데이터 설정
       EmployeeDTO adminEmployee = new EmployeeDTO();
-      adminEmployee.setId(12341234);
+      adminEmployee.setId(adminEmployeeId);
       adminEmployee.setName("관리자");
       adminEmployee.setBirthDate(LocalDate.of(1990, 1, 1));
       adminEmployee.setGender(true);

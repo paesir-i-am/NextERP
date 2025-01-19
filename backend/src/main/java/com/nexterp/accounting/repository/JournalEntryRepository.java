@@ -25,6 +25,7 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Repository
 public interface JournalEntryRepository extends JpaRepository<JournalEntry, Long> {
@@ -44,5 +45,5 @@ public interface JournalEntryRepository extends JpaRepository<JournalEntry, Long
   @Query("SELECT SUM(j.amount) FROM JournalEntry j WHERE j.account.code = :accountCode")
   BigDecimal getTotalAmountByAccountCode(@Param("accountCode") String accountCode);
 
-
+  List<JournalEntry> findByTransactionId(Long transactionId);
 }
